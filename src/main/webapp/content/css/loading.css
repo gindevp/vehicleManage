@@ -150,3 +150,40 @@
   -webkit-animation-delay: 0s;
   animation-delay: 0s;
 }
+
+ .calendar-cell {
+   position: relative;
+   text-align: center;
+   line-height: 1.1;
+ }
+
+.solar-day {
+  font-size: 12px;
+}
+
+/* ngày hiện tại: tô đỏ số ngày dương */
+.calendar-cell.today .solar-day {
+  color: red;
+  font-weight: 600;
+}
+
+.lunar-day {
+  font-size: 10px;
+  opacity: 0.95;
+}
+
+.lunar-day.special {
+  font-weight: 600;
+}
+
+/* chấm đỏ nhỏ cho ngày lễ dương */
+.holiday-dot {
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: red;
+}
