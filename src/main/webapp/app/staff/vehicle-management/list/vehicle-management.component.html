@@ -1,0 +1,53 @@
+<div>
+  <!-- <nz-date-picker nzFormat="dd/MM/yyyy" [nzDateRender]="tplLunarRender" nzPlaceHolder="Chọn ngày"></nz-date-picker>
+  <ng-template #tplLunarRender let-current>
+    <div style="font-size: 12px; line-height: 1;">{{ getDateDay(current) }}</div>
+    <div class="l" style="font-size: 10px; opacity: .95;" [class.special]="isSpecial(current)">
+      {{ lunarText(current) }}
+    </div>
+  </ng-template> -->
+  <div>
+    <form nz-form [formGroup]="formSearchGroup">
+      <nz-form-item>
+        <nz-form-label [nzLabelAlign]="'left'" [nzSpan]="2" nzRequired>Tên</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <input nz-input formControlName="name" placeholder="Tên" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  <button nz-button (click)="handleItem(null)" nzType="primary">Thêm mới</button>
+  <button nz-button (click)="searchPage()" nzType="primary">Tìm kiếm</button>
+
+  <nz-table #headerTable [nzData]="listOfData ?? []" [nzScroll]="{ y: '500px' }" [nzLoading]="isLoading()"
+    [nzFrontPagination]="false" [nzTotal]="totalItem" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+    [nzPageSizeOptions]="[10, 20]">
+    <thead>
+      <tr>
+        <th>Tên</th>
+        <th nzWidth="100px">Loại</th>
+        <th>Ngày mua</th>
+        <th>Ngày đăng ký</th>
+        <th nzRight>Hành Động</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (data of headerTable.data; track data) {
+      <tr>
+        <td>{{ data?.name || '' }}</td>
+        <td>{{ data.type | formatType:'vehicle'}}</td>
+        <td>{{ formatDate(data.purchaseDate) || ''}}</td>
+        <td>{{ formatDate(data.registrationDate) || ''}}</td>
+        <td>
+          <div class="flex" style="gap: 8px">
+            <button nz-button (click)="handleItem(data)" nzType="primary">Sửa</button>
+            <button nz-button (click)="deleteItem(data)" nzType="primary">Xoá</button>
+          </div>
+
+        </td>
+
+      </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>

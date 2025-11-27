@@ -1,0 +1,118 @@
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzLabelAlign]="'left'" [nzSpan]="7" nzRequired>Tên</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzValidatingTip="Validating..." nzErrorTip="Vui lòng nhập tên!">
+        <input nz-input formControlName="name" placeholder="Tên" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzLabelAlign]="'left'" [nzSpan]="7">Loại</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select formControlName="type">
+          <nz-option [nzValue]="1" nzLabel="Nhập khẩu"></nz-option>
+          <nz-option [nzValue]="2" nzLabel="Nội địa"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzLabelAlign]="'left'" [nzSpan]="7">Ngày mua</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-date-picker
+          style="width: 100%;"
+          nzFormat="dd/MM/yyyy"
+          formControlName="purchaseDate"
+          [nzDateRender]="tplLunarRender"
+          nzPlaceHolder="Chọn ngày"
+        ></nz-date-picker>
+
+        <ng-template #tplLunarRender let-current>
+          <div class="calendar-cell" [class.today]="isToday(current)">
+            <div class="solar-day">
+              {{ getDateDay(current) }}
+            </div>
+            <div class="lunar-day" [class.special]="isSpecial(current)">
+              {{ lunarText(current) }}
+            </div>
+            <!-- chấm đỏ cho ngày lễ dương -->
+            <div class="holiday-dot" *ngIf="isHoliday(current)"></div>
+          </div>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzLabelAlign]="'left'" [nzSpan]="7">Ngày đăng ký</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Ngày đăng ký">
+        <nz-date-picker
+          style="width: 100%;"
+          nzFormat="dd/MM/yyyy"
+          formControlName="registrationDate"
+          [nzDateRender]="tplLunarRenderRegis"
+          nzPlaceHolder="Chọn ngày"
+        ></nz-date-picker>
+
+        <ng-template #tplLunarRenderRegis let-current>
+          <div class="calendar-cell" [class.today]="isToday(current)">
+            <div class="solar-day">
+              {{ getDateDay(current) }}
+            </div>
+            <div class="lunar-day" [class.special]="isSpecial(current)">
+              {{ lunarText(current) }}
+            </div>
+            <div class="holiday-dot" *ngIf="isHoliday(current)"></div>
+          </div>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <div class="d-flex justify-content-end" style="gap: 12px;">
+    <button nz-button nzType="default" (click)="handleCancel()">Huỷ</button>
+    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">
+      {{ idItem ? 'Cập nhật' : 'Lưu' }}
+    </button>
+  </div>
+</div>
+
+<!-- 🔴 INTERNAL CSS NGAY TRONG HTML -->
+<style>
+  .calendar-cell {
+    position: relative;
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  .solar-day {
+    font-size: 12px;
+  }
+
+  /* ngày hiện tại: tô đỏ số ngày dương */
+  .calendar-cell.today .solar-day {
+    color: red;
+    font-weight: 600;
+  }
+
+  .lunar-day {
+    font-size: 10px;
+    opacity: 0.95;
+  }
+
+  .lunar-day.special {
+    font-weight: 600;
+  }
+
+  /* chấm đỏ nhỏ cho ngày lễ dương */
+  .holiday-dot {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: red;
+  }
+</style>

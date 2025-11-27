@@ -1,0 +1,10 @@
+entity Vehicle {
+  name String required maxlength(500)
+  type Long required
+  registrationDate LocalDate
+  purchaseDate LocalDate
+}
+
+dto Vehicle with mapstruct
+service Vehicle with serviceClass
+paginate Vehicle with pagination
