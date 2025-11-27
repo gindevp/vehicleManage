@@ -94,7 +94,7 @@ spring:
     name: vehicleManage
   docker:
     compose:
-      enabled: false
+      enabled: true
       lifecycle-management: start-only
       file: src/main/docker/services.yml
   profiles:
