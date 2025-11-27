@@ -136,6 +136,7 @@ export class VehicleFormComponent implements OnInit, OnDestroy {
   private solarHolidays: string[] = [
     '1-1',  // 01/01
     '30-4', // 30/04
+    '25-11', // fake
     '1-5',  // 01/05
     '2-9',  // 02/09
   ];
